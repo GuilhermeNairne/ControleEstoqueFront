@@ -5,11 +5,11 @@ import {
 } from '@chakra-ui/react'
 import { Home } from './Home';
 
-const { Button } = chakraTheme.components
+const { Container } = chakraTheme.components
 
 const theme = extendBaseTheme({
   components: {
-    Button,
+    Container,
   },
 })
 
