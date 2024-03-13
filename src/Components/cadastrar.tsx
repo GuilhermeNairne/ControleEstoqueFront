@@ -4,28 +4,35 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useProdutos } from "../useProdutos";
 
 interface Form {
     nome: string;
     categoria: string;
-    preco: number;
+    preço: number;
     quantidade: number;
 }
 
 export function Cadastrar() {
-    const [form, setForm] = useState<Form>({
+    const { createProdutos } = new useProdutos();
+
+    const [produtos, setProdutos] = useState<Form>({
         nome: '',
         categoria: '',
-        preco: 0,
+        preço: 0,
         quantidade: 0,
       })
 
       const handleInputChange = (fieldName: keyof Form, value: string | number) => {
-        setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
+        setProdutos((prevForm) => ({ ...prevForm, [fieldName]: value }));
       };
 
       function handleSave() {
-        
+        try {
+            createProdutos(produtos)
+        } catch (error) {
+            console.log("Erro ao cadastrar produto!")
+        }
       }
 
 
@@ -44,7 +51,7 @@ export function Cadastrar() {
                     placeHolder="Informe a categoria do produto"             
                     />
                 <CustonInput 
-                    onChangeText={(value) => handleInputChange('preco', value)}
+                    onChangeText={(value) => handleInputChange('preço', value)}
                     name="Preço"
                     placeHolder="Informe o preço do produto"/>
                 <CustonInput
