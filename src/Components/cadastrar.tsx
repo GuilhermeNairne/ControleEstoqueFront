@@ -14,7 +14,7 @@ interface Form {
 }
 
 export function Cadastrar() {
-    const { createProdutos } = new useProdutos();
+    const { createProdutos } =  useProdutos();
 
     const [produtos, setProdutos] = useState<Form>({
         nome: '',
@@ -42,20 +42,20 @@ export function Cadastrar() {
         <Center mt={'50px'} display={'flex'} flexDir={'column'}>
             <Stack spacing={5}>
                 <CustonInput 
-                    onChangeText={(value) => handleInputChange('nome', value)}
+                    onChangeText={(value: any) => handleInputChange('nome', value)}
                     name="Nome"
                     placeHolder="Informe o nome do produto"/>
                 <CustonInput 
-                     onChangeText={(value) => handleInputChange('categoria', value)}
+                     onChangeText={(value: any) => handleInputChange('categoria', value)}
                     name="Categoria"
                     placeHolder="Informe a categoria do produto"             
                     />
                 <CustonInput 
-                    onChangeText={(value) => handleInputChange('preço', value)}
+                    onChangeText={(value: any) => handleInputChange('preço', value)}
                     name="Preço"
                     placeHolder="Informe o preço do produto"/>
                 <CustonInput
-                    onChangeText={(value) => handleInputChange('quantidade', value)} 
+                    onChangeText={(value: any) => handleInputChange('quantidade', value)} 
                     name="Quantidade" 
                     placeHolder="Informe a quantidade do produto"/>
             </Stack>
