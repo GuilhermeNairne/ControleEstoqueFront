@@ -1,28 +1,16 @@
-import {
-  ChakraBaseProvider,
-  extendBaseTheme,
-  theme as chakraTheme,
-} from '@chakra-ui/react'
-import { Home } from './Home';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const { Container } = chakraTheme.components
-const queryClient = new QueryClient();
-
-const theme = extendBaseTheme({
-  components: {
-    Container,
-  },
-})
-
+import { ChakraProvider } from "@chakra-ui/react";
+import { Home } from "./Home";
+import { QueryClient, QueryClientProvider } from "react-query";
+import myTheme from "./mytheme";
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
-    <ChakraBaseProvider theme={theme}>
-      <Home />
-  </ChakraBaseProvider>
-    </QueryClientProvider>
+    <ChakraProvider theme={myTheme} cssVarsRoot={"aaaaaaa"}>
+      <QueryClientProvider client={queryClient}>
+        <Home />
+      </QueryClientProvider>
+    </ChakraProvider>
   );
 }
 
