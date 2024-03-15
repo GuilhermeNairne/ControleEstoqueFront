@@ -38,7 +38,6 @@ export function useProdutos() {
   async function deleteProduto(_id: string) {
     const { data } = await api.delete("/produtos/" + _id);
 
-    console.log("aqui", data);
     return data;
   }
 

@@ -1,18 +1,22 @@
 import {
+  Box,
   Button,
   Center,
   Flex,
   HStack,
+  Link,
   Select,
   Stack,
   Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
 import { useProdutos } from "../useProdutos";
-import { CustonInput } from "./customInput";
+import { CustonInput } from "./custom-input";
+import { ModalAddCategoria } from "./Modais/modal-add-categoria";
 
 interface Form {
   nome: string;
@@ -24,8 +28,11 @@ interface Form {
 export function Cadastrar() {
   const { createProdutos } = useProdutos();
   const toast = useToast();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const initialValues = { nome: "", categoria: "", preço: 0, quantidade: 0 };
+
+  async function addCategoria() {}
 
   async function handleSave(Produtos: Form) {
     try {
@@ -38,7 +45,6 @@ export function Cadastrar() {
         isClosable: true,
       });
     } catch (error) {
-      console.log(error);
       toast({
         title: "Erro ao cadastrar o produto!",
         status: "error",
@@ -50,6 +56,7 @@ export function Cadastrar() {
 
   return (
     <Flex flexDir={"column"}>
+      <ModalAddCategoria IsOpen={isOpen} OnClose={onClose} />
       <Text
         color={"#1A1741"}
         fontSize={"xx-large"}
@@ -100,14 +107,6 @@ export function Cadastrar() {
                 </Select>
               </HStack>
 
-              {/* <CustonInput
-                value={values.categoria}
-                onChangeText={(value) => {
-                  handleChange("categoria")(value);
-                }}
-                name="Categoria"
-                placeHolder="Informe a categoria do produto"
-              /> */}
               <CustonInput
                 value={values.preço === 0 ? "" : values.preço}
                 onChangeText={(value) => {
@@ -137,6 +136,10 @@ export function Cadastrar() {
                 w={"150px"}
                 h={"40px"}
                 bg={"#1A1741"}
+                _hover={{
+                  transition: 0.5,
+                  transform: "scale(1.1)",
+                }}
               >
                 <Text color={"white"} fontWeight={"bold"}>
                   Cancelar
@@ -153,6 +156,10 @@ export function Cadastrar() {
                 w={"150px"}
                 h={"40px"}
                 bg={"#1A1741"}
+                _hover={{
+                  transition: 0.5,
+                  transform: "scale(1.1)",
+                }}
               >
                 <Text color={"white"} fontWeight={"bold"}>
                   Cadastrar
@@ -162,6 +169,20 @@ export function Cadastrar() {
           </Center>
         )}
       </Formik>
+
+      <Box position="fixed" bottom={0} p={4} w="100%" left={"87%"}>
+        <Link onClick={onOpen}>
+          <FontAwesomeIcon icon={faPlus} color={"white"} size="lg" />
+          <Text
+            fontSize={"medium"}
+            color={"#1A1741"}
+            fontWeight={"bold"}
+            textDecoration="underline"
+          >
+            Adicionar nova categoria
+          </Text>
+        </Link>
+      </Box>
     </Flex>
   );
 }
