@@ -8,6 +8,12 @@ Projeto criado em JavaScript utilizando o framwork React JS
 
 * Listagem dos produtos
 
+## Funcionalidades em desenvolvimento
+
+* Cadastro de categorias
+
+* Login
+
 ### `Clonar o projeto`
 
 https://github.com/GuilhermeNairne/ControleEstoqueFront.git
