@@ -2,6 +2,14 @@
 
 Projeto criado em JavaScript utilizando o framwork React JS
 
+### `Clonar o projeto`
+
+https://github.com/GuilhermeNairne/ControleEstoqueFront.git
+
+ou
+
+clicando em "<> code" -> Download ZIP
+
 ## Como rodar o projeto
 
 No diretório do projeto você pode executar:
