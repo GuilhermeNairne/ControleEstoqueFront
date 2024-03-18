@@ -13,8 +13,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
+import { useQuery } from "react-query";
+import { useCategorias } from "../../hooks/useCategorias";
+import { Form } from "../../pages/listarProdutos";
 import { CustonInput } from "../custom-input";
-import { Form } from "../listar";
 
 interface Props {
   InitialValues: Form;
@@ -29,6 +31,13 @@ export function ModalEdit({
   OpenModalEdit,
   SetOpenModalEdit,
 }: Props) {
+  const { getCategorias } = useCategorias();
+
+  const { data: categorias } = useQuery({
+    queryKey: ["categorias"],
+    queryFn: async () => getCategorias(),
+  });
+
   return (
     <Modal isOpen={OpenModalEdit} onClose={() => SetOpenModalEdit(false)}>
       <ModalOverlay />
@@ -72,17 +81,16 @@ export function ModalEdit({
                         borderRadius={"15px"}
                         p={"5px"}
                         bg={"#F2F2F2"}
-                        value={values.categoria ?? ""}
+                        value={values.categoriaId ?? ""}
                         onChange={(e) => {
                           const selectedValue = e.target.value;
                           setFieldValue("categoria", selectedValue);
                         }}
                       >
                         <option value="">Selecione uma opção</option>
-                        <option value="energetico">Enegético</option>
-                        <option value="refrigerante">Refrigerante</option>
-                        <option value="cerveja">Cerveja</option>
-                        <option value="suco">Suco</option>
+                        {categorias?.map((cat) => (
+                          <option value={cat._id}>{cat.nome}</option>
+                        ))}
                       </Select>
                     </HStack>
 

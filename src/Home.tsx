@@ -3,20 +3,28 @@ import {
   faList,
   faPlus,
   faRightFromBracket,
+  faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Cadastrar } from "./Components/cadastrar";
-import { Listar } from "./Components/listar";
+import { CadastrarProdutos } from "./pages/cadastrarProdutos";
+import { ListarProdutos } from "./pages/listarProdutos";
+import { ListarCategorias } from "./pages/listarCategorias";
 
 export function Home() {
-  const [tab, setTab] = useState<string>("listar");
+  const [tab, setTab] = useState<string>("listarProdutos");
 
-  function selectTab(tab: "cadastrar" | "listar") {
-    if (tab === "cadastrar") {
-      setTab("cadastrar");
-    } else {
-      setTab("listar");
+  function selectTab(
+    tab: "cadastrarProduto" | "listarProdutos" | "listarCategorias"
+  ) {
+    if (tab === "cadastrarProduto") {
+      setTab("cadastrarProduto");
+    }
+    if (tab === "listarProdutos") {
+      setTab("listarProdutos");
+    }
+    if (tab === "listarCategorias") {
+      setTab("listarCategorias");
     }
   }
 
@@ -46,15 +54,15 @@ export function Home() {
           </Stack>
         </HStack>
         <Stack mt={"100px"} alignItems={"center"} spacing={5}>
-          <Link onClick={() => selectTab("cadastrar")}>
+          <Link onClick={() => selectTab("cadastrarProduto")}>
             <HStack>
               <FontAwesomeIcon
                 icon={faPlus}
-                color={tab === "cadastrar" ? "#54bcd1" : "white"}
+                color={tab === "cadastrarProduto" ? "#54bcd1" : "white"}
                 size="lg"
               />
               <Text
-                color={tab === "cadastrar" ? "#54bcd1" : "white"}
+                color={tab === "cadastrarProduto" ? "#54bcd1" : "white"}
                 fontSize={"large"}
                 fontWeight={"bold"}
               >
@@ -62,19 +70,35 @@ export function Home() {
               </Text>
             </HStack>
           </Link>
-          <Link onClick={() => selectTab("listar")}>
+          <Link onClick={() => selectTab("listarProdutos")}>
             <HStack>
               <FontAwesomeIcon
                 icon={faList}
-                color={tab === "listar" ? "#54bcd1" : "white"}
+                color={tab === "listarProdutos" ? "#54bcd1" : "white"}
                 size="lg"
               />
               <Text
-                color={tab === "listar" ? "#54bcd1" : "white"}
+                color={tab === "listarProdutos" ? "#54bcd1" : "white"}
                 fontSize={"large"}
                 fontWeight={"bold"}
               >
                 Lista de produtos
+              </Text>
+            </HStack>
+          </Link>
+          <Link onClick={() => selectTab("listarCategorias")}>
+            <HStack>
+              <FontAwesomeIcon
+                icon={faClipboardList}
+                color={tab === "listarCategorias" ? "#54bcd1" : "white"}
+                size="lg"
+              />
+              <Text
+                color={tab === "listarCategorias" ? "#54bcd1" : "white"}
+                fontSize={"large"}
+                fontWeight={"bold"}
+              >
+                Lista de Categorias
               </Text>
             </HStack>
           </Link>
@@ -93,7 +117,9 @@ export function Home() {
       </Box>
 
       <Box p={"20px"} w={"80%"} h={"100%"} bg={"white"}>
-        {tab === "cadastrar" ? <Cadastrar /> : <Listar />}
+        {tab === "cadastrarProduto" && <CadastrarProdutos />}
+        {tab === "listarProdutos" && <ListarProdutos />}
+        {tab === "listarCategorias" && <ListarCategorias />}
       </Box>
     </Flex>
   );

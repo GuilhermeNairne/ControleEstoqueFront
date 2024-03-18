@@ -1,4 +1,4 @@
-import { Form } from "../Components/listar";
+import { Form } from "../pages/listarProdutos";
 
 export function valoresPreenchidos(Produtos: Form) {
   const valores = Object.entries(Produtos)

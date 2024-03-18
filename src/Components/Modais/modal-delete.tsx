@@ -9,7 +9,7 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import { Form } from "../listar";
+import { Form } from "../../pages/listarProdutos";
 import React from "react";
 
 interface Prosp {
