@@ -12,23 +12,23 @@ import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useProdutos } from "../hooks/useProdutos";
-import { valoresPreenchidos } from "../utils/valores-preenchidos";
-import { ModalDelete } from "../Components/Modais/modal-delete";
-import { ModalEdit } from "../Components/Modais/modal-edit";
+import { ModalDeleteProduto } from "../Components/Modais/modal_delete_produto";
+import { ModalEditProduto } from "../Components/Modais/modal_edit_produto";
 import { useCategorias } from "../hooks/useCategorias";
+import { useProdutos } from "../hooks/useProdutos";
 
 export interface Form {
   _id: string;
   nome: string;
-  categoria: string;
   categoriaId: string;
   preço: number;
   quantidade: number;
 }
 
 export function ListarProdutos() {
+  const toast = useToast();
   const { getProdutos, deleteProduto } = useProdutos();
+  const { updateCategorias } = useCategorias();
   const initialValues = {
     _id: "",
     nome: "",
@@ -38,12 +38,12 @@ export function ListarProdutos() {
     quantidade: 0,
   };
   const { patchProdutos } = useProdutos();
-  const { updateCategorias, getCategoriaById } = useCategorias();
   const [produtoEdit, setProdutoEdit] = useState<Form>();
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
-
-  const toast = useToast();
+  const [categoriaAntiga, setCategoriaAntiga] = useState<string | undefined>(
+    ""
+  );
 
   const { data, refetch } = useQuery({
     queryKey: ["produtos"],
@@ -51,19 +51,20 @@ export function ListarProdutos() {
   });
 
   async function handleEdit(Produtos: Form) {
-    const categoriaNome = await getCategoriaById(Produtos.categoria);
     const updateProduto = {
       nome: Produtos.nome,
       preço: Produtos.preço,
-      categoria: categoriaNome.nome ?? "",
-      categoriaId: Produtos.categoria,
+      categoriaId: Produtos.categoriaId,
       quantidade: Produtos.quantidade,
     };
 
-    console.log(updateProduto);
-
     try {
       await patchProdutos(produtoEdit?._id ?? "", updateProduto);
+
+      await updateCategorias(Produtos.categoriaId, {
+        idsProdutos: [Produtos._id],
+        idCategoriaAntiga: categoriaAntiga,
+      });
 
       toast({
         title: "Produto atualizado com sucesso!",
@@ -101,14 +102,15 @@ export function ListarProdutos() {
 
   return (
     <Flex flexDir={"column"}>
-      <ModalEdit
+      <ModalEditProduto
         HandleEdit={handleEdit}
         InitialValues={produtoEdit ? produtoEdit : initialValues}
         OpenModalEdit={openModalEdit}
         SetOpenModalEdit={setOpenModalEdit}
+        CategoriaAntiga={(value) => setCategoriaAntiga(value)}
       />
 
-      <ModalDelete
+      <ModalDeleteProduto
         HandleDelete={handleDelete}
         OpenModalDelete={openModalDelete}
         Produtos={produtoEdit}
@@ -160,7 +162,7 @@ export function ListarProdutos() {
               w={"850px"}
             >
               <Text w={"300px"}> {item.nome} </Text>
-              <Text w={"200px"}> {item.categoria} </Text>
+              <Text w={"200px"}> {item.categoriaName} </Text>
               <Text w={"100px"}> R$ {item.preço} </Text>
               <Text w={"100px"}> {item.quantidade} </Text>
               <HStack w={"55px"} spacing={5}>

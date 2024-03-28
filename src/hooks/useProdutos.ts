@@ -2,7 +2,7 @@ import api from "../api";
 
 interface createProdutos {
   nome: string;
-  categoria: string;
+  categoriaId: string;
   preço: number;
   quantidade: number;
 }
@@ -17,7 +17,7 @@ interface patchProdutos {
 interface getProdutos {
   _id: string;
   nome: string;
-  categoria: string;
+  categoriaName: string;
   categoriaId: string;
   preço: number;
   quantidade: number;
@@ -33,6 +33,7 @@ export function useProdutos() {
   async function getProdutos() {
     const { data } = await api.get<getProdutos[]>("/produtos");
 
+    console.log("data", data);
     return data;
   }
 

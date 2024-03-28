@@ -16,14 +16,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
 import { useProdutos } from "../hooks/useProdutos";
 import { CustonInput } from "../Components/custom-input";
-import { ModalAddCategoria } from "../Components/Modais/modal-add-categoria";
 import { useQuery } from "react-query";
 import { useCategorias } from "../hooks/useCategorias";
 
 interface Form {
   _id?: string;
   nome: string;
-  categoria: string;
+  categoriaId: string;
   preço: number;
   quantidade: number;
 }
@@ -31,12 +30,11 @@ interface Form {
 export function CadastrarProdutos() {
   const { createProdutos } = useProdutos();
   const toast = useToast();
-  const { isOpen, onClose, onOpen } = useDisclosure();
   const { getCategorias, updateCategorias, getCategoriaById } = useCategorias();
 
   const initialValues = {
     nome: "",
-    categoria: "",
+    categoriaId: "",
     preço: 0,
     quantidade: 0,
   };
@@ -48,18 +46,18 @@ export function CadastrarProdutos() {
 
   async function handleSave(Produtos: Form) {
     try {
-      const categoriaNome = await getCategoriaById(Produtos.categoria);
+      const categoriaNome = await getCategoriaById(Produtos.categoriaId);
 
       const createProduto = {
         nome: Produtos.nome,
         preço: Produtos.preço,
         categoria: categoriaNome.nome ?? "",
-        categoriaId: Produtos.categoria,
+        categoriaId: Produtos.categoriaId,
         quantidade: Produtos.quantidade,
       };
       const createdProduto = await createProdutos(createProduto);
 
-      await updateCategorias(Produtos.categoria, {
+      await updateCategorias(Produtos.categoriaId, {
         idsProdutos: [createdProduto._id],
       });
 
@@ -81,7 +79,6 @@ export function CadastrarProdutos() {
 
   return (
     <Flex flexDir={"column"}>
-      <ModalAddCategoria IsOpen={isOpen} OnClose={onClose} />
       <Text
         color={"#1A1741"}
         fontSize={"xx-large"}
@@ -118,10 +115,10 @@ export function CadastrarProdutos() {
                   borderRadius={"15px"}
                   p={"5px"}
                   bg={"#F2F2F2"}
-                  value={values.categoria ?? ""}
+                  value={values.categoriaId ?? ""}
                   onChange={(e) => {
                     const selectedValue = e.target.value;
-                    setFieldValue("categoria", selectedValue);
+                    setFieldValue("categoriaId", selectedValue);
                   }}
                 >
                   <option value="">Selecione uma opção</option>

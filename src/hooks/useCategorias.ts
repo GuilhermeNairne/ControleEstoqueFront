@@ -4,6 +4,7 @@ interface categorias {
   _id?: string;
   nome?: string;
   idsProdutos?: string[];
+  idCategoriaAntiga?: string;
 }
 
 export function useCategorias() {
@@ -26,13 +27,12 @@ export function useCategorias() {
   }
 
   async function deleteCategorias(_id: string) {
-    const { data } = await api.delete("/categorias" + _id);
+    const { data } = await api.delete("/categorias/" + _id);
 
     return data;
   }
 
   async function updateCategorias(_id: string, body: categorias) {
-    console.log(_id, body);
     const { data } = await api.patch(`/categorias/${_id}`, body);
 
     return data;
