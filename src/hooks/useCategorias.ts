@@ -27,6 +27,12 @@ export function useCategorias() {
   }
 
   async function deleteCategorias(_id: string) {
+    const categoriaData = await getCategoriaById(_id)
+
+    if(categoriaData?.idsProdutos!.length > 0) {
+      throw new Error("Categoria possui produtos cadastrados, não é possível fazer a exclusão!")
+    }
+
     const { data } = await api.delete("/categorias/" + _id);
 
     return data;

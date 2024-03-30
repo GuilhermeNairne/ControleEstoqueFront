@@ -102,7 +102,7 @@ export function ListarCategorias() {
 
   async function handleDelete() {
     try {
-      await deleteCategorias(categoriaProps!.id);
+     await deleteCategorias(categoriaProps!.id);
 
       toast({
         title: "Categoria deletada!",
@@ -114,7 +114,7 @@ export function ListarCategorias() {
       refetch();
     } catch (error) {
       toast({
-        title: "Erro ao deletar categoria!",
+        title: `${error}`,
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -221,7 +221,7 @@ export function ListarCategorias() {
         </Stack>
       </Center>
 
-      <Box position="fixed" bottom={0} p={4} w="100%" left={"87%"}>
+      <Box position="fixed" bottom={0} p={4} w="100%" left={"80%"}>
         <Link onClick={onOpen}>
           <FontAwesomeIcon icon={faPlus} color={"white"} size="lg" />
           <Text

@@ -87,11 +87,11 @@ export function ModalEditProduto({
                         borderColor={"F2F2F2"}
                         borderRadius={"15px"}
                         p={"5px"}
-                        bg={"#F2F2F2"}
-                        value={values.categoriaId ?? ""}
+                        bg={"#F2F2F2"}  
+                        value={values.categoriaId}
                         onChange={(e) => {
                           const selectedValue = e.target.value;
-                          setFieldValue("categoria", selectedValue);
+                          setFieldValue("categoriaId", selectedValue);
                         }}
                       >
                         <option value="">Selecione uma opção</option>

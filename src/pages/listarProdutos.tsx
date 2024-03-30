@@ -32,7 +32,6 @@ export function ListarProdutos() {
   const initialValues = {
     _id: "",
     nome: "",
-    categoria: "",
     categoriaId: "",
     preço: 0,
     quantidade: 0,
