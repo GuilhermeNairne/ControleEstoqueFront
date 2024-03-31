@@ -9,13 +9,13 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import { Form } from "../../pages/listarProdutos";
 import React from "react";
+import { ProdutoForm } from "../../types/produtosTypes";
 
 interface Prosp {
   OpenModalDelete: boolean;
   SetOpenModalDelete: (open: boolean) => void;
-  Produtos?: Form;
+  Produtos?: ProdutoForm;
   HandleDelete: () => void;
 }
 

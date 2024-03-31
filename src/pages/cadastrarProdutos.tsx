@@ -18,14 +18,9 @@ import { useProdutos } from "../hooks/useProdutos";
 import { CustonInput } from "../Components/custom-input";
 import { useQuery } from "react-query";
 import { useCategorias } from "../hooks/useCategorias";
+import { ProdutoForm } from "../types/produtosTypes";
 
-interface Form {
-  _id?: string;
-  nome: string;
-  categoriaId: string;
-  preço: number;
-  quantidade: number;
-}
+
 
 export function CadastrarProdutos() {
   const { createProdutos } = useProdutos();
@@ -33,6 +28,7 @@ export function CadastrarProdutos() {
   const { getCategorias, updateCategorias, getCategoriaById } = useCategorias();
 
   const initialValues = {
+    _id: "",
     nome: "",
     categoriaId: "",
     preço: 0,
@@ -44,7 +40,7 @@ export function CadastrarProdutos() {
     queryFn: async () => getCategorias(),
   });
 
-  async function handleSave(Produtos: Form) {
+  async function handleSave(Produtos: ProdutoForm) {
     try {
       const categoriaNome = await getCategoriaById(Produtos.categoriaId);
 

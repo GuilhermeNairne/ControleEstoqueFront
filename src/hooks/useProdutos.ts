@@ -1,4 +1,5 @@
 import api from "../api";
+import { filtrosType } from "../types/produtosTypes";
 
 interface createProdutos {
   nome: string;
@@ -30,8 +31,10 @@ export function useProdutos() {
     return data;
   }
 
-  async function getProdutos() {
-    const { data } = await api.get<getProdutos[]>("/produtos");
+  async function getProdutos(filtros?: filtrosType) {
+    const { data } = await api.get<getProdutos[]>("/produtos", {
+      params: filtros
+    });
 
     console.log("data", data);
     return data;

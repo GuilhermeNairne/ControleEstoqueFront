@@ -15,13 +15,13 @@ import {
 import { Formik } from "formik";
 import { useQuery } from "react-query";
 import { useCategorias } from "../../hooks/useCategorias";
-import { Form } from "../../pages/listarProdutos";
 import { CustonInput } from "../custom-input";
 import { useEffect } from "react";
+import { ProdutoForm } from "../../types/produtosTypes";
 
 interface Props {
-  InitialValues: Form;
-  HandleEdit: (Produtos: Form) => void;
+  InitialValues: ProdutoForm;
+  HandleEdit: (Produtos: ProdutoForm) => void;
   OpenModalEdit: boolean;
   SetOpenModalEdit: (open: boolean) => void;
   CategoriaAntiga: (id?: string) => void;
