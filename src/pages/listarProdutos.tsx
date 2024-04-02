@@ -58,8 +58,6 @@ export function ListarProdutos() {
     ""
   );
 
-  console.log(filtros);
-
   const { data, refetch } = useQuery({
     queryKey: ["produtos", filtros],
     queryFn: async () => getProdutos(filtros),
@@ -166,7 +164,7 @@ export function ListarProdutos() {
             justifyContent={"center"}
             display={"flex"}
           >
-            <Accordion defaultIndex={[0]} allowMultiple w={"90%"}>
+            <Accordion defaultIndex={[1]} allowMultiple w={"90%"}>
               <AccordionItem borderColor={"transparent"}>
                 <AccordionButton
                   ml={"45%"}

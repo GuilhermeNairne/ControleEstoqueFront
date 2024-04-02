@@ -4,6 +4,7 @@ const myTheme = extendTheme({
   fonts: {
     heading: "Rajdhani, sans-serif",
     body: "Rajdhani, sans-serif",
+    inriaSerif: "Iria Serif, serif",
   },
   colors: {
     vermelho: "#d50c20",

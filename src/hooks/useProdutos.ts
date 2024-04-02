@@ -33,10 +33,9 @@ export function useProdutos() {
 
   async function getProdutos(filtros?: filtrosType) {
     const { data } = await api.get<getProdutos[]>("/produtos", {
-      params: filtros
+      params: filtros,
     });
 
-    console.log("data", data);
     return data;
   }
 

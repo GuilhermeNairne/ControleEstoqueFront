@@ -1,16 +1,19 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { Home } from "./Home";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "./context/auth-context";
 import myTheme from "./mytheme";
-import { Login } from "./pages/login";
+import { Navigation } from "./pages/navigation";
 
 function App() {
   const queryClient = new QueryClient();
   return (
     <ChakraProvider theme={myTheme} cssVarsRoot={"aaaaaaa"}>
       <QueryClientProvider client={queryClient}>
-        {/* <Home /> */}
-        <Login />
+        <AuthProvider>
+          {/* <Home /> */}
+          {/* <Login /> */}
+          <Navigation />
+        </AuthProvider>
       </QueryClientProvider>
     </ChakraProvider>
   );

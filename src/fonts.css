@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Iria Serif';
+    src:
+        url('../src/fonts/inria_serif/InriaSerif-Bold.ttf') format('woff2'),
+        url('../src/fonts/inria_serif/InriaSerif-Italic.ttf') format('woff'),
+        url('../src/fonts/inria_serif/InriaSerif-Light.ttf') format('woff'),
+        url('../src/fonts/inria_serif/InriaSerif-Regular.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
