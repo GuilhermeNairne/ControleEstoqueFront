@@ -129,7 +129,7 @@ export function ListarProdutos() {
           borderRadius={"8px"}
         >
           <Text fontSize={"large"} color={"white"}>
-            {data?.length}
+            {data?.length ?? 0}
           </Text>
         </Box>
       </HStack>

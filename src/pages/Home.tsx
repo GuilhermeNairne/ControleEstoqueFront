@@ -52,7 +52,12 @@ export function Home() {
             borderRadius={"100%"}
           />
           <Stack>
-            <Text fontSize={"x-large"} fontWeight={"bold"} color={"white"}>
+            <Text
+              fontSize={"x-large"}
+              fontWeight={"bold"}
+              color={"white"}
+              maxW={"150px"}
+            >
               {user?.usuario}
             </Text>
             <Text fontSize={"large"} fontWeight={"light"} color={"white"}>

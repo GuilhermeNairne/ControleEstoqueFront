@@ -161,7 +161,7 @@ export function ListarCategorias() {
           borderRadius={"8px"}
         >
           <Text fontSize={"large"} color={"white"}>
-            {data?.length}
+            {data?.length ?? 0}
           </Text>
         </Box>
       </HStack>
@@ -188,7 +188,7 @@ export function ListarCategorias() {
                 {" "}
                 {item.idsProdutos?.length}{" "}
               </Text>
-              <HStack w={"55px"} spacing={5}>
+              <HStack spacing={5}>
                 <Button
                   onClick={() => {
                     setOpenModalEdit(true);

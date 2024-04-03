@@ -139,11 +139,7 @@ export function ProdutosFilter({ filtros, setFiltros }: FilterProps) {
                         setFieldValue("preço", "asc");
                       }}
                     >
-                      <FontAwesomeIcon
-                        icon={faTrashAlt}
-                        color={"red"}
-                        size="lg"
-                      />
+                      <Text color={"red"}>Limpar</Text>
                     </Link>
                   </HStack>
                 </Box>
