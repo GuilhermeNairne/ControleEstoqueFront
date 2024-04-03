@@ -19,11 +19,13 @@ import { CustonInput } from "../custom-input";
 import { useEffect } from "react";
 import { ProdutoForm } from "../../types/produtosTypes";
 
+type propropsSetModals = "modalEdit" | "modalDelete" | null | undefined;
+
 interface Props {
   InitialValues: ProdutoForm;
   HandleEdit: (Produtos: ProdutoForm) => void;
-  OpenModalEdit: boolean;
-  SetOpenModalEdit: (open: boolean) => void;
+  OpenModalEdit: string | null | undefined;
+  setOpenModais: (value: propropsSetModals) => void;
   CategoriaAntiga: (id?: string) => void;
 }
 
@@ -31,7 +33,7 @@ export function ModalEditProduto({
   InitialValues,
   HandleEdit,
   OpenModalEdit,
-  SetOpenModalEdit,
+  setOpenModais,
   CategoriaAntiga,
 }: Props) {
   const { getCategorias } = useCategorias();
@@ -43,10 +45,13 @@ export function ModalEditProduto({
 
   useEffect(() => {
     CategoriaAntiga(InitialValues.categoriaId);
-  }, [OpenModalEdit === true]);
+  }, [OpenModalEdit === "modalEdit"]);
 
   return (
-    <Modal isOpen={OpenModalEdit} onClose={() => SetOpenModalEdit(false)}>
+    <Modal
+      isOpen={OpenModalEdit === "modalEdit"}
+      onClose={() => setOpenModais(null)}
+    >
       <ModalOverlay />
       <ModalContent maxW={"600px"}>
         <ModalCloseButton />
@@ -87,7 +92,7 @@ export function ModalEditProduto({
                         borderColor={"F2F2F2"}
                         borderRadius={"15px"}
                         p={"5px"}
-                        bg={"#F2F2F2"}  
+                        bg={"#F2F2F2"}
                         value={values.categoriaId}
                         onChange={(e) => {
                           const selectedValue = e.target.value;
@@ -127,9 +132,7 @@ export function ModalEditProduto({
                   >
                     Salvar
                   </Button>
-                  <Button onClick={() => SetOpenModalEdit(false)}>
-                    Cancelar
-                  </Button>
+                  <Button onClick={() => setOpenModais(null)}>Cancelar</Button>
                 </ModalFooter>
               </>
             )}

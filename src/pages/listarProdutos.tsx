@@ -25,7 +25,7 @@ import { ProdutoForm, filtrosType } from "../types/produtosTypes";
 export function ListarProdutos() {
   const toast = useToast();
   const { getProdutos, deleteProduto } = useProdutos();
-  const { updateCategorias, getCategorias } = useCategorias();
+  const { updateCategorias } = useCategorias();
   const initialValues = {
     _id: "",
     nome: "",
@@ -35,13 +35,10 @@ export function ListarProdutos() {
   };
   const { patchProdutos } = useProdutos();
   const [filtros, setFiltros] = useState<filtrosType>(inicialFiltrosValues);
-  const [produtoEdit, setProdutoEdit] = useState<ProdutoForm>();
-  const [openModalEdit, setOpenModalEdit] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [categoriaAntiga, setCategoriaAntiga] = useState<string | undefined>(
-    ""
-  );
-
+  const [produtoEdit, setProdutoEdit] = useState<ProdutoForm>(initialValues);
+  const [openModais, setOpenModais] = useState<
+    "modalEdit" | "modalDelete" | null
+  >();
   const { data, refetch } = useQuery({
     queryKey: ["produtos", filtros],
     queryFn: async () => getProdutos(filtros),
@@ -60,7 +57,7 @@ export function ListarProdutos() {
 
       await updateCategorias(Produtos.categoriaId, {
         idsProdutos: [Produtos._id],
-        idCategoriaAntiga: categoriaAntiga,
+        idCategoriaAntiga: produtoEdit?.categoriaAntiga,
       });
 
       toast({
@@ -79,7 +76,7 @@ export function ListarProdutos() {
         isClosable: true,
       });
     } finally {
-      setOpenModalEdit(false);
+      setOpenModais(null);
     }
   }
 
@@ -90,7 +87,7 @@ export function ListarProdutos() {
       await updateCategorias(produtoEdit!.categoriaId, {
         idsProdutos: [produtoEdit!._id],
       });
-      setOpenModalDelete(false);
+      setOpenModais(null);
       refetch();
     } catch (error) {
       throw new Error("Erro ao deletar produto!");
@@ -102,16 +99,18 @@ export function ListarProdutos() {
       <ModalEditProduto
         HandleEdit={handleEdit}
         InitialValues={produtoEdit ? produtoEdit : initialValues}
-        OpenModalEdit={openModalEdit}
-        SetOpenModalEdit={setOpenModalEdit}
-        CategoriaAntiga={(value) => setCategoriaAntiga(value)}
+        OpenModalEdit={openModais}
+        setOpenModais={setOpenModais}
+        CategoriaAntiga={(value) =>
+          setProdutoEdit({ ...produtoEdit, categoriaAntiga: value })
+        }
       />
 
       <ModalDeleteProduto
         HandleDelete={handleDelete}
-        OpenModalDelete={openModalDelete}
+        OpenModalDelete={openModais}
         Produtos={produtoEdit}
-        SetOpenModalDelete={setOpenModalDelete}
+        setOpenModais={setOpenModais}
       />
 
       <Text fontSize={"xx-large"} fontWeight={"bold"} textAlign={"center"}>
@@ -167,7 +166,7 @@ export function ListarProdutos() {
                 <Button
                   onClick={() => {
                     setProdutoEdit(item);
-                    setOpenModalEdit(true);
+                    setOpenModais("modalEdit");
                   }}
                   bg={"transparent"}
                 >
@@ -176,7 +175,7 @@ export function ListarProdutos() {
 
                 <Button
                   onClick={() => {
-                    setOpenModalDelete(true);
+                    setOpenModais("modalDelete");
                     setProdutoEdit(item);
                   }}
                   bg={"transparent"}

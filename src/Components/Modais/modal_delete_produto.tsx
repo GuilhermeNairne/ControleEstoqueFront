@@ -12,16 +12,18 @@ import {
 import React from "react";
 import { ProdutoForm } from "../../types/produtosTypes";
 
+type propsSetModal = "modalEdit" | "modalDelete" | null | undefined;
+
 interface Prosp {
-  OpenModalDelete: boolean;
-  SetOpenModalDelete: (open: boolean) => void;
+  OpenModalDelete: string | null | undefined;
+  setOpenModais: (value: propsSetModal) => void;
   Produtos?: ProdutoForm;
   HandleDelete: () => void;
 }
 
 export function ModalDeleteProduto({
   OpenModalDelete,
-  SetOpenModalDelete,
+  setOpenModais,
   Produtos,
   HandleDelete,
 }: Prosp) {
@@ -29,9 +31,9 @@ export function ModalDeleteProduto({
 
   return (
     <AlertDialog
-      isOpen={OpenModalDelete}
+      isOpen={OpenModalDelete === "modalDelete"}
       leastDestructiveRef={cancelRef}
-      onClose={() => SetOpenModalDelete(false)}
+      onClose={() => setOpenModais(null)}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
@@ -49,7 +51,7 @@ export function ModalDeleteProduto({
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={() => SetOpenModalDelete(false)}>
+            <Button ref={cancelRef} onClick={() => setOpenModais(null)}>
               Cancelar
             </Button>
             <Button colorScheme="red" onClick={HandleDelete} ml={3}>
