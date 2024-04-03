@@ -1,26 +1,21 @@
 import {
-  Box,
   Button,
   Center,
   Flex,
   HStack,
-  Link,
   Select,
   Stack,
   Text,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { faClose, faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
-import { useProdutos } from "../hooks/useProdutos";
-import { CustonInput } from "../Components/custom-input";
 import { useQuery } from "react-query";
+import { CustonInput } from "../Components/custom-input";
 import { useCategorias } from "../hooks/useCategorias";
+import { useProdutos } from "../hooks/useProdutos";
 import { ProdutoForm } from "../types/produtosTypes";
-
-
 
 export function CadastrarProdutos() {
   const { createProdutos } = useProdutos();

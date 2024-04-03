@@ -7,7 +7,6 @@ import {
   Link,
   Stack,
   Text,
-  Toast,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -17,12 +16,12 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useQuery } from "react-query";
-import { useCategorias } from "../hooks/useCategorias";
-import { ModalAddCategoria } from "../Components/Modais/modal_add_categoria";
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { ModalAddCategoria } from "../Components/Modais/modal_add_categoria";
 import { ModalDeleteCategoria } from "../Components/Modais/modal_delete_categoria";
 import { ModalEditCategoria } from "../Components/Modais/modal_edit_categoria";
+import { useCategorias } from "../hooks/useCategorias";
 
 export type categoriaType = {
   categoriaName: string;
@@ -102,7 +101,7 @@ export function ListarCategorias() {
 
   async function handleDelete() {
     try {
-     await deleteCategorias(categoriaProps!.id);
+      await deleteCategorias(categoriaProps!.id);
 
       toast({
         title: "Categoria deletada!",

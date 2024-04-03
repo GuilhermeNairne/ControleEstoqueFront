@@ -10,8 +10,6 @@ function App() {
     <ChakraProvider theme={myTheme} cssVarsRoot={"aaaaaaa"}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          {/* <Home /> */}
-          {/* <Login /> */}
           <Navigation />
         </AuthProvider>
       </QueryClientProvider>

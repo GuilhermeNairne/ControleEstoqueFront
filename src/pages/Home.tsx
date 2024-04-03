@@ -15,6 +15,7 @@ import { AuthContext } from "../context/auth-context";
 export function Home() {
   const [tab, setTab] = useState<string>("listarProdutos");
   const { singOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   function selectTab(
     tab: "cadastrarProduto" | "listarProdutos" | "listarCategorias"
@@ -48,10 +49,10 @@ export function Home() {
           />
           <Stack>
             <Text fontSize={"x-large"} fontWeight={"bold"} color={"white"}>
-              Renan
+              {user?.usuario}
             </Text>
             <Text fontSize={"large"} fontWeight={"light"} color={"white"}>
-              Administrador
+              {user?.funcao}
             </Text>
           </Stack>
         </HStack>

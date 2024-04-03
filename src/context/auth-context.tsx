@@ -1,31 +1,12 @@
-import { ReactNode, createContext, useState } from "react";
+import { createContext, useState } from "react";
 import api from "../api";
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-type LoginResponse = {
-  access_token: string;
-  usuario: string;
-  funcao: string;
-};
-
-type LoginAccess = {
-  usuario: string;
-  senha: string;
-};
-
-type AuthResponse = {
-  access_token: string;
-  usuario: string;
-  funcao: string;
-};
-
-type LoggedUser = {
-  usuario: string;
-  funcao: string;
-};
+import {
+  AuthProviderProps,
+  AuthResponse,
+  LoggedUser,
+  LoginAccess,
+  LoginResponse,
+} from "./contestTypes";
 
 interface AuthContextData {
   login: (credentials: LoginAccess) => Promise<AuthResponse>;
