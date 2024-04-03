@@ -42,7 +42,11 @@ export function Home() {
       >
         <HStack>
           <Image
-            src={"https://avatars.githubusercontent.com/u/77353839?v=4"}
+            src={
+              user?.urlImage
+                ? user?.urlImage
+                : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Duser&psig=AOvVaw1JpsFdRNOnIO6CebNTtfsr&ust=1712236575917000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCODk7biQpoUDFQAAAAAdAAAAABAE"
+            }
             w={"100px"}
             h={"100px"}
             borderRadius={"100%"}

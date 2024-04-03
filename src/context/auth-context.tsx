@@ -21,13 +21,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<LoggedUser | null>();
   const isSignedIn = !!user;
   const setAuth = async (auth: AuthResponse) => {
-    const { funcao, usuario, access_token } = auth;
+    const { funcao, usuario, access_token, urlImage } = auth;
 
     await localStorage.setItem("access_token", access_token);
 
     api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
-    setUser({ usuario, funcao });
+    setUser({ usuario, funcao, urlImage });
   };
 
   api.interceptors.response.use(

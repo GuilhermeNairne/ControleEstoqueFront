@@ -8,6 +8,7 @@ export type LoginResponse = {
   access_token: string;
   usuario: string;
   funcao: string;
+  urlImage: string;
 };
 
 export type LoginAccess = {
@@ -19,9 +20,11 @@ export type AuthResponse = {
   access_token: string;
   usuario: string;
   funcao: string;
+  urlImage: string;
 };
 
 export type LoggedUser = {
   usuario: string;
   funcao: string;
+  urlImage: string;
 };
