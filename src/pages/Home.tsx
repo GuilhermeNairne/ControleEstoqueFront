@@ -11,6 +11,7 @@ import { CadastrarProdutos } from "./cadastrarProdutos";
 import { ListarProdutos } from "./listarProdutos";
 import { ListarCategorias } from "./listarCategorias";
 import { AuthContext } from "../context/auth-context";
+import { Perfil } from "./perfil";
 
 export function Home() {
   const [tab, setTab] = useState<string>("listarProdutos");
@@ -18,7 +19,7 @@ export function Home() {
   const { user } = useContext(AuthContext);
 
   function selectTab(
-    tab: "cadastrarProduto" | "listarProdutos" | "listarCategorias"
+    tab: "cadastrarProduto" | "listarProdutos" | "listarCategorias" | "perfil"
   ) {
     if (tab === "cadastrarProduto") {
       setTab("cadastrarProduto");
@@ -28,6 +29,9 @@ export function Home() {
     }
     if (tab === "listarCategorias") {
       setTab("listarCategorias");
+    }
+    if (tab === "perfil") {
+      setTab("perfil");
     }
   }
 
@@ -114,6 +118,22 @@ export function Home() {
               </Text>
             </HStack>
           </Link>
+          <Link onClick={() => selectTab("perfil")}>
+            <HStack>
+              <FontAwesomeIcon
+                icon={faClipboardList}
+                color={tab === "perfil" ? "#54bcd1" : "white"}
+                size="lg"
+              />
+              <Text
+                color={tab === "perfil" ? "#54bcd1" : "white"}
+                fontSize={"large"}
+                fontWeight={"bold"}
+              >
+                Perfil
+              </Text>
+            </HStack>
+          </Link>
         </Stack>
 
         <Link onClick={singOut}>
@@ -134,6 +154,7 @@ export function Home() {
         {tab === "cadastrarProduto" && <CadastrarProdutos />}
         {tab === "listarProdutos" && <ListarProdutos />}
         {tab === "listarCategorias" && <ListarCategorias />}
+        {tab === "perfil" && <Perfil />}
       </Box>
     </Flex>
   );

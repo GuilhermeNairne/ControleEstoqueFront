@@ -5,11 +5,13 @@ export interface AuthProviderProps {
 }
 
 export type LoginResponse = {
+  _id: string;
   access_token: string;
   refresh_token: string;
   usuario: string;
   funcao: string;
   urlImage: string;
+  email: string;
 };
 
 export type LoginAccess = {
@@ -23,10 +25,12 @@ export type AuthResponse = {
   usuario: string;
   funcao: string;
   urlImage: string;
+  email: string;
 };
 
 export type LoggedUser = {
   usuario: string;
+  email: string;
   funcao: string;
   urlImage: string;
 };

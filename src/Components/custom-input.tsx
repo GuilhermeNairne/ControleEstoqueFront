@@ -5,10 +5,18 @@ interface Props {
   placeHolder: string;
   onChangeText: (value: string) => void;
   value: string | number;
-  width?: string
+  width?: string;
+  isDisabled?: boolean;
 }
 
-export function CustonInput({ name, placeHolder, onChangeText, value, width }: Props) {
+export function CustonInput({
+  name,
+  placeHolder,
+  onChangeText,
+  value,
+  width,
+  isDisabled,
+}: Props) {
   return (
     <HStack>
       <Text color={"black"} textAlign={"right"} w={"100px"} fontWeight={"bold"}>
@@ -27,6 +35,7 @@ export function CustonInput({ name, placeHolder, onChangeText, value, width }: P
           onChangeText(newValue);
         }}
         value={value}
+        isDisabled={isDisabled}
       />
     </HStack>
   );

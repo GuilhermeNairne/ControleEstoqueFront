@@ -100,13 +100,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const setAuth = async (auth: AuthResponse) => {
-    const { funcao, usuario, access_token, urlImage } = auth;
+    const { funcao, usuario, access_token, urlImage, email } = auth;
 
     await localStorage.setItem("access_token", access_token);
 
     api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
-    setUser({ usuario, funcao, urlImage });
+    setUser({ usuario, funcao, urlImage, email });
   };
 
   async function refreshToken(token?: string): Promise<AuthResponse> {
