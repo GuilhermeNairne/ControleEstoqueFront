@@ -7,12 +7,14 @@ Projeto criado em JavaScript utilizando o framwork React JS
 * Cadastro de produtos
 
 * Listagem dos produtos
-
-## Funcionalidades em desenvolvimento
-
+  
 * Cadastro de categorias
 
 * Login
+  
+## Funcionalidades em desenvolvimento
+
+* Baixa de estoque
 
 ### `Clonar o projeto`
 
