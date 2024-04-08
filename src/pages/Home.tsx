@@ -4,6 +4,7 @@ import {
   faPlus,
   faRightFromBracket,
   faClipboardList,
+  faBoxesStacked,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
@@ -12,6 +13,7 @@ import { ListarProdutos } from "./listarProdutos";
 import { ListarCategorias } from "./listarCategorias";
 import { AuthContext } from "../context/auth-context";
 import { Perfil } from "./perfil";
+import { BaixaEstoque } from "./baixaEstoque";
 
 export function Home() {
   const [tab, setTab] = useState<string>("listarProdutos");
@@ -19,7 +21,12 @@ export function Home() {
   const { user } = useContext(AuthContext);
 
   function selectTab(
-    tab: "cadastrarProduto" | "listarProdutos" | "listarCategorias" | "perfil"
+    tab:
+      | "cadastrarProduto"
+      | "listarProdutos"
+      | "listarCategorias"
+      | "perfil"
+      | "baixaEstoque"
   ) {
     if (tab === "cadastrarProduto") {
       setTab("cadastrarProduto");
@@ -32,6 +39,9 @@ export function Home() {
     }
     if (tab === "perfil") {
       setTab("perfil");
+    }
+    if (tab === "baixaEstoque") {
+      setTab("baixaEstoque");
     }
   }
 
@@ -118,6 +128,22 @@ export function Home() {
               </Text>
             </HStack>
           </Link>
+          <Link onClick={() => selectTab("baixaEstoque")}>
+            <HStack>
+              <FontAwesomeIcon
+                icon={faBoxesStacked}
+                color={tab === "baixaEstoque" ? "#54bcd1" : "white"}
+                size="lg"
+              />
+              <Text
+                color={tab === "baixaEstoque" ? "#54bcd1" : "white"}
+                fontSize={"large"}
+                fontWeight={"bold"}
+              >
+                Baixa Estoque
+              </Text>
+            </HStack>
+          </Link>
           <Link onClick={() => selectTab("perfil")}>
             <HStack>
               <FontAwesomeIcon
@@ -155,6 +181,7 @@ export function Home() {
         {tab === "listarProdutos" && <ListarProdutos />}
         {tab === "listarCategorias" && <ListarCategorias />}
         {tab === "perfil" && <Perfil />}
+        {tab === "baixaEstoque" && <BaixaEstoque />}
       </Box>
     </Flex>
   );

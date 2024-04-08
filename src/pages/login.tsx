@@ -117,9 +117,7 @@ export function Login() {
           {({ handleSubmit, handleChange }) => (
             <Stack spacing={"30px"}>
               <Box display={"flex"} flexDir={"column"}>
-                <Text fontFamily={"Iria Serif"} fontSize={"large"}>
-                  Usuário
-                </Text>
+                <Text fontSize={"large"}>Usuário</Text>
                 <Input
                   boxShadow="md"
                   placeholder={"Informe seu usuário"}
@@ -127,7 +125,6 @@ export function Login() {
                   borderWidth={"1px"}
                   borderRadius={"5px"}
                   p={"5px"}
-                  fontFamily={"Iria Serif"}
                   fontSize={"large"}
                   bg={"#F2F2F2"}
                   onChange={(value) => {
@@ -136,9 +133,7 @@ export function Login() {
                 />
               </Box>
               <Box display={"flex"} flexDir={"column"}>
-                <Text fontFamily={"Iria Serif"} fontSize={"large"}>
-                  Senha
-                </Text>
+                <Text fontSize={"large"}>Senha</Text>
                 <InputGroup>
                   <Input
                     type={isVisiblePassword ? "text" : "password"}
@@ -148,7 +143,6 @@ export function Login() {
                     borderWidth={"1px"}
                     borderRadius={"5px"}
                     p={"5px"}
-                    fontFamily={"Iria Serif"}
                     fontSize={"large"}
                     bg={"#F2F2F2"}
                     onChange={(value) => {
@@ -183,20 +177,12 @@ export function Login() {
                   _hover={{ opacity: 0.8 }}
                   onClick={() => handleSubmit()}
                 >
-                  <Text
-                    fontSize={"large"}
-                    color={"white"}
-                    fontFamily={"Iria Serif"}
-                  >
+                  <Text fontSize={"large"} color={"white"}>
                     LOGAR
                   </Text>
                 </Button>
                 <Link>
-                  <Text
-                    textAlign={"center"}
-                    fontFamily={"Iria Serif"}
-                    fontSize={"medium"}
-                  >
+                  <Text textAlign={"center"} fontSize={"medium"}>
                     Esqueci minha senha
                   </Text>
                 </Link>

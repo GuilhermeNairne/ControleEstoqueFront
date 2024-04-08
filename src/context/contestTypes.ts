@@ -20,6 +20,7 @@ export type LoginAccess = {
 };
 
 export type AuthResponse = {
+  _id: string;
   access_token: string;
   refresh_token: string;
   usuario: string;
@@ -29,6 +30,7 @@ export type AuthResponse = {
 };
 
 export type LoggedUser = {
+  _id: string;
   usuario: string;
   email: string;
   funcao: string;
