@@ -14,13 +14,13 @@ import {
 import { faClose, faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
-import { useProdutos } from "../useProdutos";
 import { CustonInput } from "./custom-input";
 import { ModalAddCategoria } from "./Modais/modal-add-categoria";
+import { useProdutos } from "../hooks/useProdutos";
 
 interface Form {
   nome: string;
-  categoria: string;
+  categoriaId: string;
   preço: number;
   quantidade: number;
 }
@@ -30,9 +30,7 @@ export function Cadastrar() {
   const toast = useToast();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const initialValues = { nome: "", categoria: "", preço: 0, quantidade: 0 };
-
-  async function addCategoria() {}
+  const initialValues = { nome: "", categoriaId: "", preço: 0, quantidade: 0 };
 
   async function handleSave(Produtos: Form) {
     try {
@@ -93,7 +91,7 @@ export function Cadastrar() {
                   borderRadius={"15px"}
                   p={"5px"}
                   bg={"#F2F2F2"}
-                  value={values.categoria ?? ""}
+                  value={values.categoriaId ?? ""}
                   onChange={(e) => {
                     const selectedValue = e.target.value;
                     setFieldValue("categoria", selectedValue);

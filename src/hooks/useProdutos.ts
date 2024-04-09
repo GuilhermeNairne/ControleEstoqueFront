@@ -1,28 +1,11 @@
 import api from "../api";
-import { filtrosType } from "../types/produtosTypes";
-
-interface createProdutos {
-  nome: string;
-  categoriaId: string;
-  preço: number;
-  quantidade: number;
-}
-
-interface patchProdutos {
-  nome?: string;
-  categoria?: string;
-  preço?: number;
-  quantidade?: number;
-}
-
-interface getProdutos {
-  _id: string;
-  nome: string;
-  categoriaName: string;
-  categoriaId: string;
-  preço: number;
-  quantidade: number;
-}
+import {
+  Produto,
+  createProdutos,
+  filtrosType,
+  getProdutos,
+  patchProdutos,
+} from "../types/produtosTypes";
 
 export function useProdutos() {
   async function createProdutos(body: createProdutos): Promise<getProdutos> {
@@ -51,5 +34,17 @@ export function useProdutos() {
     return data;
   }
 
-  return { createProdutos, getProdutos, deleteProduto, patchProdutos };
+  async function updateEstoque(updateData: Produto[]) {
+    const { data } = await api.post("/produtos/atualiza-estoque", updateData);
+
+    return data;
+  }
+
+  return {
+    createProdutos,
+    getProdutos,
+    deleteProduto,
+    patchProdutos,
+    updateEstoque,
+  };
 }

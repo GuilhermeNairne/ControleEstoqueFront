@@ -12,3 +12,31 @@ export type filtrosType = {
   categoriaId: string;
   preço: string;
 };
+
+export type Produto = {
+  _id: string;
+  quantidade: number;
+};
+
+type createProdutos = {
+  nome: string;
+  categoriaId: string;
+  preço: number;
+  quantidade: number;
+};
+
+type patchProdutos = {
+  nome?: string;
+  categoria?: string;
+  preço?: number;
+  quantidade?: number;
+};
+
+type getProdutos = {
+  _id: string;
+  nome: string;
+  categoriaName: string;
+  categoriaId: string;
+  preço: number;
+  quantidade: number;
+};

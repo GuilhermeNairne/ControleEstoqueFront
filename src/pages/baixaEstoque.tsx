@@ -1,4 +1,12 @@
-import { Button, Flex, HStack, Select, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Select,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import {
   faAdd,
   faArrowsRotate,
@@ -9,79 +17,144 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { CustonInput } from "../Components/custom-input";
 import { useProdutos } from "../hooks/useProdutos";
-import { ProdutoForm } from "../types/produtosTypes";
+import { Produto, ProdutoForm } from "../types/produtosTypes";
 
 export function BaixaEstoque() {
+  const { updateEstoque } = useProdutos();
   const [qtBaixaProdutos, setQtBaixaProdutos] = useState(1);
+  const [listaProdutos, setListaProdutos] = useState<Produto[]>([]);
+
+  function atualizaLista(_id: string, quantidade: number) {
+    const produtoExistente = listaProdutos.find(
+      (produto) => produto._id === _id
+    );
+
+    if (produtoExistente) {
+      const novaListaProdutos: Produto[] = listaProdutos.map((produto) =>
+        produto._id === _id ? { ...produto, quantidade } : produto
+      );
+      setListaProdutos(novaListaProdutos);
+    } else {
+      const novoProduto: Produto = { _id, quantidade };
+      setListaProdutos((prevListaProdutos) => [
+        ...prevListaProdutos,
+        novoProduto,
+      ]);
+    }
+  }
+
+  function removeDaLista(_id: string) {
+    const produtos = listaProdutos.filter((prod) => prod._id !== _id);
+
+    setListaProdutos(produtos);
+
+    setQtBaixaProdutos(qtBaixaProdutos - 1);
+  }
 
   return (
-    <Flex flexDir={"column"} flex={1} alignItems={"center"}>
+    <Flex flexDir={"column"} flex={1} alignItems={"center"} mt={"50px"}>
       <Text
         color={"#1A1741"}
         fontSize={"xx-large"}
         fontWeight={"bold"}
         textAlign={"center"}
-        mt={"30px"}
+        my={"20px"}
       >
         Baixa de estoque
       </Text>
-      <Flex
-        mt={"100px"}
+
+      <Box
+        overflowY="auto"
+        h="500px"
         p={"20px"}
-        w={"70%"}
-        borderRadius={"10px"}
-        flexDir={"column"}
-        style={{ gap: 35 }}
         alignItems={"center"}
+        display={"flex"}
+        flexDir={"column"}
+        sx={{
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+        }}
       >
         {[...Array(qtBaixaProdutos)].map((_, index) => (
           <ProdutoBaixa
+            index={index}
             key={index}
-            setQtProdutos={(value) =>
-              setQtBaixaProdutos(qtBaixaProdutos - value)
+            setRemoveProduto={(value) => removeDaLista(value)}
+            setProdutoLista={(_id: string, quantidade: number) =>
+              atualizaLista(_id, quantidade)
             }
           />
         ))}
         <Button
           w={"200px"}
+          mt={"10px"}
+          flexShrink={0}
           borderRadius={"10px"}
-          bg={"#adadad"}
+          bg={"#c4c4c4"}
           _hover={{ opacity: 0.8 }}
           onClick={() => setQtBaixaProdutos(qtBaixaProdutos + 1)}
           rightIcon={<FontAwesomeIcon icon={faAdd} color={"white"} size="lg" />}
         >
           <Text color={"white"}>Adicionar produto</Text>
         </Button>
-        <Button
-          mt={"200px"}
-          w={"300px"}
-          borderRadius={"10px"}
-          fontSize={"large"}
-          bg={"#1A1741"}
-          _hover={{ opacity: 0.8 }}
-          onClick={() => setQtBaixaProdutos(qtBaixaProdutos + 1)}
-          rightIcon={
-            <FontAwesomeIcon icon={faArrowsRotate} color={"white"} size="lg" />
-          }
-        >
-          <Text color={"white"}>Atualizar estoque</Text>
-        </Button>
-      </Flex>
+      </Box>
+      <Button
+        mt={"100px"}
+        w={"300px"}
+        borderRadius={"10px"}
+        fontSize={"large"}
+        bg={"#1A1741"}
+        _hover={{ opacity: 0.8 }}
+        onClick={() => updateEstoque(listaProdutos)}
+        rightIcon={
+          <FontAwesomeIcon icon={faArrowsRotate} color={"white"} size="lg" />
+        }
+      >
+        <Text color={"white"}>Atualizar estoque</Text>
+      </Button>
     </Flex>
   );
 }
 
 type Props = {
-  setQtProdutos: (value: number) => void;
+  index: number;
+  setRemoveProduto: (_id: string) => void;
+  setProdutoLista: (_id: string, quantidade: number) => void;
 };
 
-function ProdutoBaixa({ setQtProdutos }: Props) {
+function ProdutoBaixa({ setProdutoLista, setRemoveProduto }: Props) {
+  const toast = useToast();
   const { getProdutos } = useProdutos();
   const [produtoSelecionado, setProdutoSelecionado] = useState<ProdutoForm>();
+  const [quantidadeAtualizada, setQuantidadeAtualizada] = useState(0);
   const { data: produtos } = useQuery({
     queryKey: ["produtos"],
     queryFn: async () => getProdutos(),
   });
+
+  function atualizaQuantidade(qnt: number) {
+    if (qnt > produtoSelecionado!.quantidade) {
+      setTimeout(() => {
+        toast({
+          title: "Quantidade de baixa não pode ser maior que o estoque!",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+
+        return setQuantidadeAtualizada(0);
+      }, 700);
+    }
+
+    setQuantidadeAtualizada(qnt);
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedProductId = event.target.value;
@@ -90,10 +163,9 @@ function ProdutoBaixa({ setQtProdutos }: Props) {
   };
 
   return (
-    <HStack spacing={10}>
+    <HStack spacing={10} mb={"15px"}>
       <HStack>
         <Text fontWeight={"bold"}>Produto</Text>
-
         <Select
           w={"200px"}
           borderWidth={"1px"}
@@ -122,17 +194,21 @@ function ProdutoBaixa({ setQtProdutos }: Props) {
       />
       <CustonInput
         name="Qt. Baixa"
-        onChangeText={() => ""}
+        onChangeText={(value) => {
+          atualizaQuantidade(Number(value));
+          setProdutoLista(produtoSelecionado?._id ?? "", Number(value));
+        }}
         placeHolder=""
-        value={""}
+        value={quantidadeAtualizada}
         width="50px"
+        isDisabled={!produtoSelecionado}
       />
 
       <FontAwesomeIcon
         icon={faTrashAlt}
         color={"red"}
         size="lg"
-        onClick={() => setQtProdutos(1)}
+        onClick={() => setRemoveProduto(produtoSelecionado?._id ?? "")}
       />
     </HStack>
   );
